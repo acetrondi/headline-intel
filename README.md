@@ -10,7 +10,7 @@ What actually makes a technical headline work — measured on **9,809 high-perfo
 posts** across Hacker News, Reddit, Dev.to, Medium, Substack and X, then turned into a
 scorer that runs entirely in your browser.
 
-**[Live demo →](https://acetrondi.github.io/headline-intel/)**
+**[Live demo →](https://headlines.connectingdots.live/)**
 
 No build step. No dependencies. No network calls. Open `index.html` and it works.
 
@@ -76,14 +76,32 @@ docs/                 reports 01–08, generated from the JSON
 
 Only `assets/data.js` is generated. The HTML, CSS and JS are normal source files.
 
-## Hosting on GitHub Pages
+## Hosting
+
+Live at **[headlines.connectingdots.live](https://headlines.connectingdots.live/)**.
+
+### GitHub Pages
 
 1. Push the repo.
 2. Settings → Pages → Source: **Deploy from a branch**, branch `main`, folder `/ (root)`.
-3. Done. `.nojekyll` is included so `assets/` is served as-is.
+3. Settings → Pages → Custom domain: `headlines.connectingdots.live` → Save.
+4. Tick **Enforce HTTPS** once the certificate is issued (can take ~15 minutes).
 
-It is a static site — it works equally well on Netlify, Cloudflare Pages, S3, or opened
-straight from disk.
+`.nojekyll` is included so `assets/` is served as-is, and `CNAME` binds the custom domain.
+
+### DNS
+
+One record at whoever hosts `connectingdots.live` DNS:
+
+| Type | Name | Value | TTL |
+|---|---|---|---|
+| CNAME | `headlines` | `acetrondi.github.io.` | 3600 |
+
+The value is the **user** subdomain, not the repo — no `/headline-intel` path. Propagation is
+usually minutes but can take up to 24 hours.
+
+This is a static site, so it also works on Netlify, Cloudflare Pages, S3, or straight from
+disk via `file://`.
 
 ## Re-running the pipeline
 
