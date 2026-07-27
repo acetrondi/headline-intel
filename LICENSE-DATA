@@ -1,0 +1,29 @@
+Data, model weights and documentation licence
+=============================================
+
+The CODE in this repository is MIT licensed — see LICENSE.
+
+Everything in `data/` and `docs/` — the fitted model weights, the aggregate
+statistics, the validation results and the written reports — is licensed
+Creative Commons Attribution 4.0 International (CC BY 4.0).
+
+    https://creativecommons.org/licenses/by/4.0/
+
+You are free to share and adapt this material, including commercially,
+provided you give appropriate credit:
+
+    Headline Intelligence — Kailash Rathod (itsarises.com), Connecting Dots
+    (connectingdots.live). https://github.com/kailashrathod/headline-intel
+    Licensed CC BY 4.0.
+
+Why two licences: MIT lets anyone build on the software with no strings,
+which is what you want for adoption. CC BY protects the part that actually
+took the work — the research — by requiring attribution when it is reused.
+
+NOT COVERED BY EITHER LICENCE
+-----------------------------
+The underlying corpus of collected post titles is NOT included in this
+repository and is NOT licensed for redistribution. Those titles are the
+copyright of their respective authors. Analysing public posts and
+republishing them are different things. If you re-collect, check each
+platform's terms yourself.

@@ -1,0 +1,3 @@
+# The pipeline deliberately uses almost nothing.
+# numpy is the only hard requirement (ridge regression + the validation splits).
+numpy>=1.24

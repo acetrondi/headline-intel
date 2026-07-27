@@ -1,0 +1,13 @@
+# Raw API payloads and the derived corpus are NOT redistributed.
+# Analysing public posts and republishing them are different things.
+raw/
+data/corpus.jsonl
+data/dataset.jsonl
+data/dataset.csv
+data/training_set.jsonl
+data/fewshot_exemplars.json
+
+__pycache__/
+*.pyc
+.DS_Store
+.venv/

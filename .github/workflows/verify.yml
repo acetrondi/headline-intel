@@ -1,0 +1,35 @@
+name: verify
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: pip install -r requirements.txt
+
+      # data.js must match the committed model — catches a stale regeneration
+      - name: assets/data.js is up to date
+        run: |
+          cp assets/data.js /tmp/data.js.committed
+          python3 pipeline/build_data.py
+          diff -q /tmp/data.js.committed assets/data.js \
+            || (echo "::error::assets/data.js is stale — run pipeline/build_data.py"; exit 1)
+
+      # the browser scorer must agree with the Python model, feature for feature
+      - name: Python/JavaScript parity + integrity checks
+        run: python3 pipeline/verify.py
+
+      - name: App smoke test
+        run: node tests/smoke.cjs

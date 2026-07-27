@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Headline Intelligence — score a technical headline against real engagement data</title>
+<meta name="description" content="Score titles, subtitles and tags for Hacker News, Reddit, Dev.to, Medium, Substack and X against a model fitted on 9,809 high-performing technical posts. Runs entirely in your browser.">
+<meta name="author" content="Kailash Rathod">
+<link rel="canonical" href="https://acetrondi.github.io/headline-intel/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Headline Intelligence">
+<meta property="og:description" content="What actually makes a technical headline work, measured on 9,809 top-performing posts across six platforms.">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Headline Intelligence",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any (runs in the browser)",
+      "url": "https://acetrondi.github.io/headline-intel/",
+      "description": "Scores technical headlines, subtitles and tags against a model fitted on 9,809 high-performing posts across Hacker News, Reddit, Dev.to, Medium, Substack and X.",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": {
+        "@type": "Person",
+        "name": "Kailash Rathod",
+        "url": "https://itsarises.com",
+        "sameAs": ["https://itsarises.com", "https://connectingdots.live"]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Connecting Dots",
+        "url": "https://connectingdots.live",
+        "sameAs": ["https://connectingdots.live", "https://itsarises.com"]
+      }
+    },
+    {
+      "@type": "Dataset",
+      "name": "Technical headline engagement corpus (derived weights)",
+      "description": "Fitted model weights and aggregate statistics derived from 9,809 high-performing posts across six publishing platforms. Derived artefacts only; the underlying corpus is not redistributed.",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": {
+        "@type": "Person",
+        "name": "Kailash Rathod",
+        "url": "https://itsarises.com"
+      },
+      "isPartOf": { "@type": "WebSite", "url": "https://connectingdots.live" }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <nav class="wrap" aria-label="Main">
+    <a class="brand" href="./"><span class="dot" aria-hidden="true"></span> Headline Intelligence</a>
+    <div class="navlinks">
+      <a href="#tool"><span class="nav-short">Score</span><span class="nav-long">Score a headline</span></a>
+      <a href="#rules"><span class="nav-short">Rules</span><span class="nav-long">Platform rules</span></a>
+      <a href="#method"><span class="nav-short">Method</span><span class="nav-long">Method &amp; limits</span></a>
+      <a href="https://github.com/acetrondi/headline-intel" rel="noopener">
+        <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        <span class="nav-long">Source</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <section class="hero">
+      <h1>What actually makes a technical headline work</h1>
+      <p class="lede">
+        There is no universal headline formula. The rules invert across platforms — a question mark
+        costs <strong>19.8</strong> percentile points on Dev.to and <em>gains</em> on Medium. This tool scores
+        your draft against a model fitted on real engagement data, and tells you what it is reacting to.
+      </p>
+      <div class="hero-stats">
+        <div><b data-meta="n_posts">—</b> posts analysed</div>
+        <div><b data-meta="n_platforms">—</b> platforms</div>
+        <div><b data-meta="best_rho">—</b> best rank correlation</div>
+        <div><b data-meta="updated">—</b> last updated</div>
+      </div>
+    </section>
+
+    <section id="tool">
+      <div class="grid">
+
+        <!-- ------------------------------------------------ input column -->
+        <div>
+          <div class="card">
+            <p class="card-label">Your headline</p>
+            <label for="plat">Platform</label>
+            <select id="plat"></select>
+
+            <label for="title">Title</label>
+            <textarea id="title" placeholder="How we cut p99 latency 40% by deleting one Postgres index"></textarea>
+
+            <label for="sub">Subtitle or description <span class="note">(optional)</span></label>
+            <textarea id="sub" placeholder="Three weeks, two rollbacks, and a lot of EXPLAIN ANALYZE."></textarea>
+
+            <label for="topic">Topic or pasted content <span class="note">(used for suggestions)</span></label>
+            <textarea id="topic" placeholder="Postgres query performance, indexing, production database"></textarea>
+
+            <button id="go" class="block" type="button">Score &amp; generate</button>
+            <p style="margin:.75rem 0 0"><button id="demo" class="ghost" type="button">Load an example</button></p>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Score</p>
+            <div id="score"><p class="note">Enter a title to score it.</p></div>
+            <p class="note" id="scorenote"></p>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Attention axes</p>
+            <div id="axes"><p class="note">—</p></div>
+            <p class="note" style="margin-top:.75rem">
+              Axis values are measured properties of your text. Weights are platform-specific
+              and fitted on the data — green means the model rewards it here, red means it penalises it.
+            </p>
+          </div>
+        </div>
+
+        <!-- ----------------------------------------------- output column -->
+        <div>
+          <div class="card">
+            <p class="card-label">Diagnostics</p>
+            <div id="flags"><p class="note">—</p></div>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Generated candidates</p>
+            <div class="tabs" id="ctabs"></div>
+            <div id="cands"><p class="note">Enter a topic and press Score &amp; generate.</p></div>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Subtitle suggestions</p>
+            <div id="subs"><p class="note">—</p></div>
+            <p class="note" style="margin-top:.5rem">
+              A subtitle has one job: expand the promise without repeating the title.
+              Target 10–18 words and under 25% word overlap.
+            </p>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Recommended tags</p>
+            <div id="tags"><p class="note">—</p></div>
+            <p class="note" style="margin-top:.75rem">
+              Ranked by mean engagement percentile among tagged posts. Aim for one broad,
+              one mid and one specific — never four specific.
+            </p>
+          </div>
+
+          <div class="card" id="rules-card">
+            <p class="card-label">What this platform rewards</p>
+            <div id="rules"></div>
+          </div>
+
+          <div class="card">
+            <p class="card-label">Prompt for an LLM</p>
+            <pre id="prompt">Enter a topic to generate a prompt loaded with this platform's measured rules.</pre>
+            <p style="margin:.75rem 0 0"><button id="copy" class="ghost" type="button">Copy prompt</button></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="rules">
+      <h2>Four rules that held on every platform</h2>
+      <div class="prose">
+        <ul>
+          <li><strong>One concrete number with a unit.</strong> "Cut p99 from 900&nbsp;ms to 40&nbsp;ms" — not
+              "dramatically faster", and not a listicle count.</li>
+          <li><strong>Evidence of first-hand work.</strong> "we measured", "I built", "in production",
+              "postmortem", "after three years".</li>
+          <li><strong>Ornamentation is a tax.</strong> ALL-CAPS, stacked acronyms and adjective stacking
+              correlate negatively everywhere.</li>
+          <li><strong>Never restate the title in the subtitle.</strong> Overlap above 25% loses the one
+              chance you get to expand the promise.</li>
+        </ul>
+        <p>Everything else — length, questions, listicles, negativity, colons — flips sign depending on
+           the audience. Any tool that applies one global formula across platforms is, on this evidence,
+           wrong about half the time.</p>
+      </div>
+    </section>
+
+    <section id="method">
+      <h2>Method &amp; limits</h2>
+      <div class="prose">
+        <p>
+          Every post is converted to a <strong>within-platform engagement percentile</strong>, because points,
+          claps, reactions, likes and upvotes are not comparable numbers. Each platform has an explicit
+          engagement floor so the corpus contains genuine successes, with the full range above that floor
+          kept intact so the model still has variance to learn from.
+        </p>
+        <p>
+          <strong>What it cannot do.</strong> The best per-platform model explains roughly 13% of the variance
+          in relative engagement; most explain 3–7%. Headline text is a small lever. This is a good tool for
+          choosing between your own drafts and a bad one for predicting reach — the body, the timing and
+          the author's existing audience are much larger factors.
+        </p>
+        <p>
+          Two further caveats. Only high-performing posts were collected, so every effect size here is a
+          <em>lower bound</em>. And five of six platforms do not expose view counts, so "engagement" means
+          votes, claps, reactions and likes rather than attention itself.
+        </p>
+        <p>
+          Full write-up: <a href="docs/01-methodology.md">methodology</a> ·
+          <a href="docs/05-platform-comparison.md">platform comparison</a> ·
+          <a href="docs/07-attention-model.md">the model</a> ·
+          <a href="docs/08-frameworks.md">frameworks</a> ·
+          <a href="docs/09-improving-the-model.md">improving it with more data</a>.
+        </p>
+
+        <h3 style="margin-top:1.75rem">Who made this</h3>
+        <p>
+          Built by <a href="https://itsarises.com">Kailash Rathod (itsarises.com)</a> and published
+          alongside <a href="https://connectingdots.live">Connecting Dots</a>, an evidence-based
+          resource for SEO, AEO and GEO. The design system is shared with Connecting Dots.
+        </p>
+        <p>
+          Code is MIT licensed. The research — the fitted weights, the statistics and everything
+          in <code>docs/</code> — is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>,
+          so you may reuse it commercially provided you credit the source.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>
+      <span class="dot" aria-hidden="true"></span>
+      Built by <a href="https://itsarises.com">itsarises.com</a> and
+      <a href="https://connectingdots.live">connectingdots.live</a> —
+      open source, runs entirely in your browser.
+    </p>
+    <nav aria-label="Footer">
+      <a href="https://github.com/acetrondi/headline-intel" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:.35rem">
+        <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a> ·
+      <a href="docs/01-methodology.md">Method</a> ·
+      <a href="data/model.json">Model weights</a> ·
+      <a href="LICENSE">MIT</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

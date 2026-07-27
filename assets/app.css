@@ -1,0 +1,283 @@
+/* Headline Intelligence — styles
+   Design tokens mirror the Connecting Dots design system (design.md):
+   OKLCH colour, Raleway + Geist Mono, one accent per view, evidence colours
+   reserved for evidence UI only. Light is default; dark inverts ink/paper. */
+
+:root {
+  --paper: oklch(0.985 0.003 90);
+  --ink: oklch(0.22 0.02 260);
+  --dot: oklch(0.55 0.18 262);
+  --dot-soft: oklch(0.94 0.04 262);
+  --muted: oklch(0.55 0.01 260);
+  --line: oklch(0.9 0.005 260);
+  --strong: oklch(0.55 0.15 150);
+  --mixed: oklch(0.72 0.14 85);
+  --weak: oklch(0.55 0.19 25);
+  --panel: oklch(1 0 0);
+
+  --font-sans: Raleway, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: oklch(0.16 0.01 260);
+    --ink: oklch(0.93 0.01 260);
+    --dot: oklch(0.65 0.15 262);
+    --dot-soft: oklch(0.28 0.06 262);
+    --muted: oklch(0.7 0.01 260);
+    --line: oklch(0.3 0.005 260);
+    --panel: oklch(0.19 0.01 260);
+  }
+}
+
+/* 112.5% = 18px base, matching the design system */
+html { font-size: 112.5%; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* numerals must align in tables and stats */
+.mono, table td.num, .score-value, .stat {
+  font-family: var(--font-mono);
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+a { color: var(--dot); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--dot);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip {
+  position: absolute; left: -9999px;
+}
+.skip:focus {
+  left: 0.5rem; top: 0.5rem; z-index: 60;
+  background: var(--dot); color: #fff;
+  padding: 0.5rem 0.75rem; border-radius: 6px;
+}
+
+/* ---------------------------------------------------------------- layout */
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 768px) { .wrap { padding: 0 1.5rem; } }
+
+header.site {
+  position: sticky; top: 0; z-index: 40;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in oklch, var(--paper) 85%, transparent);
+  backdrop-filter: blur(12px);
+}
+header.site nav {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 3.5rem; gap: 1rem;
+}
+.brand {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-weight: 600; letter-spacing: -0.01em; color: inherit; text-decoration: none;
+  white-space: nowrap;
+}
+.dot {
+  display: inline-block; width: 0.625rem; height: 0.625rem;
+  border-radius: 999px; background: var(--dot); flex: none;
+}
+
+/* Nav stays reachable on phones: a scrollable row rather than a hidden menu.
+   Hiding links behind a hamburger would need JS, and the design system's rule
+   is that navigation never gates content. */
+.navlinks {
+  display: flex; gap: 1rem; font-size: 0.85rem; align-items: center;
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  margin-left: auto;
+}
+.navlinks::-webkit-scrollbar { display: none; }
+.navlinks a {
+  color: inherit; text-decoration: none; opacity: 0.8; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  min-height: 2.75rem;                       /* 44px tap target */
+}
+.navlinks a:hover { opacity: 1; }
+@media (min-width: 768px) { .navlinks { gap: 1.25rem; } }
+/* the shortest labels only matter on a phone */
+.nav-short { display: inline; }
+.nav-long { display: none; }
+@media (min-width: 560px) {
+  .nav-short { display: none; }
+  .nav-long { display: inline; }
+}
+
+.gh-icon { width: 1.05rem; height: 1.05rem; fill: currentColor; flex: none; }
+
+/* ---------------------------------------------------------------- hero */
+.hero { padding: 3rem 0 2rem; }
+h1 {
+  font-size: clamp(2rem, 4.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.015em;
+  margin: 0 0 1rem;
+}
+/* the design system's TL;DR anchor: dot-soft panel, left rule in dot */
+.lede {
+  max-width: 62ch; margin: 0;
+  font-size: 1.05rem; line-height: 1.7;
+  padding: 0.85rem 1rem; border-left: 3px solid var(--dot);
+  background: var(--dot-soft); border-radius: 0 8px 8px 0;
+}
+.hero-stats { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; }
+.hero-stats div { font-size: 0.8rem; color: var(--muted); }
+.hero-stats b { display: block; font-size: 1.35rem; color: var(--ink); font-weight: 600; }
+
+/* ---------------------------------------------------------------- cards */
+section { padding: 1.5rem 0; }
+h2 {
+  font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+}
+h3 { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; }
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+@media (min-width: 900px) { .grid { grid-template-columns: 23rem 1fr; align-items: start; } }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.card > h3:first-child { margin-top: 0; }
+.card-label {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); font-weight: 600; margin: 0 0 0.75rem;
+}
+
+/* ---------------------------------------------------------------- forms */
+label { display: block; font-size: 0.78rem; color: var(--muted); margin: 0.85rem 0 0.35rem; }
+input, textarea, select {
+  width: 100%; font: inherit; font-size: 0.92rem;
+  color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+textarea { min-height: 4.5rem; resize: vertical; }
+input:focus, textarea:focus, select:focus { outline: 2px solid var(--dot); outline-offset: 1px; border-color: var(--dot); }
+
+button {
+  font: inherit; font-weight: 600; cursor: pointer;
+  border: 0; border-radius: 999px;
+  background: var(--dot); color: #fff;
+  padding: 0.6rem 1.1rem;
+  transition: transform 0.15s ease-out;
+}
+button:active { transform: scale(0.985); }
+button.block { width: 100%; margin-top: 1rem; }
+button.ghost {
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line); font-weight: 500;
+  padding: 0.4rem 0.85rem; font-size: 0.82rem;
+}
+/* 44px minimum tap target on touch devices (design.md accessibility rule) */
+@media (pointer: coarse) {
+  button, .navlinks a { min-height: 2.75rem; }
+  button.ghost { padding-inline: 1rem; }
+}
+button.ghost[aria-pressed="true"] { background: var(--dot-soft); color: var(--dot); border-color: var(--dot); }
+
+/* ---------------------------------------------------------------- score */
+.score-head { display: flex; align-items: baseline; gap: 0.6rem; }
+.score-value { font-size: 3rem; line-height: 1; font-weight: 600; }
+.score-band {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 999px;
+}
+.band-strong { background: color-mix(in oklch, var(--strong) 15%, transparent); color: var(--strong); }
+.band-mixed  { background: color-mix(in oklch, var(--mixed) 20%, transparent); color: oklch(0.5 0.12 85); }
+.band-weak   { background: color-mix(in oklch, var(--weak) 14%, transparent); color: var(--weak); }
+
+.bar { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 0.5rem 0; }
+.bar > i { display: block; height: 100%; background: var(--dot); border-radius: 999px; }
+
+.axis { margin-bottom: 0.7rem; }
+.axis-top { display: flex; justify-content: space-between; font-size: 0.78rem; }
+.axis-top span { color: var(--muted); }
+.axis .bar > i.pos { background: var(--strong); }
+.axis .bar > i.neg { background: var(--weak); }
+
+.note { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+/* ---------------------------------------------------------------- flags */
+.flag {
+  font-size: 0.85rem; padding: 0.55rem 0.75rem; border-radius: 8px;
+  border-left: 3px solid var(--line); background: var(--paper);
+  margin-bottom: 0.45rem;
+}
+.flag.good { border-left-color: var(--strong); }
+.flag.warn { border-left-color: var(--mixed); }
+.flag.bad  { border-left-color: var(--weak); }
+.flag b { font-family: var(--font-mono); font-feature-settings: "lnum" 1; }
+
+/* ---------------------------------------------------------------- lists */
+.item {
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.75rem 0.9rem; margin-bottom: 0.6rem; background: var(--paper);
+}
+.item-title { font-size: 0.98rem; margin-bottom: 0.35rem; }
+.item-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; font-size: 0.76rem; color: var(--muted); }
+
+.chip {
+  display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.55rem;
+  border-radius: 999px; background: var(--dot-soft); color: var(--dot);
+  margin: 0.15rem 0.25rem 0.15rem 0;
+}
+.chip.good { background: color-mix(in oklch, var(--strong) 15%, transparent); color: var(--strong); }
+.chip.bad { background: color-mix(in oklch, var(--weak) 14%, transparent); color: var(--weak); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
+
+/* ---------------------------------------------------------------- tables */
+/* narrow screens scroll the table rather than the whole page */
+.tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 0.5rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 18rem; }
+th {
+  text-align: left; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--muted); font-weight: 600;
+  padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--line);
+}
+td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--line); }
+td.num { text-align: right; }
+.pos { color: var(--strong); }
+.neg { color: var(--weak); }
+
+pre {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.85rem; font-family: var(--font-mono); font-size: 0.75rem;
+  white-space: pre-wrap; max-height: 22rem; overflow: auto; color: var(--ink);
+}
+
+/* ---------------------------------------------------------------- prose */
+.prose { max-width: 68ch; }
+.prose p { margin: 0 0 0.9rem; }
+.prose ul { margin: 0 0 0.9rem; padding-left: 1.1rem; }
+.prose li { margin-bottom: 0.35rem; }
+.prose li::marker { color: var(--dot); }
+
+footer.site {
+  border-top: 1px solid var(--line); margin-top: 3rem;
+  padding: 2rem 0; font-size: 0.82rem; color: var(--muted);
+}
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+footer.site a { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
